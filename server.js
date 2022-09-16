@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const routes = require('./routes/notes');
 
 // Helper method for generating unique ids
 const uuid = require('./helpers/uuid');
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
+app.use('/', routes);
 
 // GET route for notes page
 app.get('/notes', (req, res) =>

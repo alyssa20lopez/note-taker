@@ -1,11 +1,6 @@
 // Dependencies
+const app = require('express').Router();
 const fs = require('fs');
-const express = require('express');
-const routes = require('./routes/notes');
-
-const app = express();
-app.use(express.json());
-app.use('/', routes);
 
 // NPM package
 const {readFromFile, readAndAppend, writeToFile} = require('../helpers/fsUtils');
@@ -19,9 +14,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/', (req, res) => {
-    let db = fs.readFileSync('..db/db.json');
-    db = JSON.parse(db);
-    res.json(db);
+  console.info(`${req.method} request received to submit notes!`);
 
 
   // Destructuring assignment for the items in req.body
@@ -36,6 +29,7 @@ app.post('/', (req, res) => {
       note_id: uuid(),
     }
   
+
     // Pushing newNote to db.json file
     db.push(newNote);
       fs.writeFileSync('db/db.json', JSON.stringify(db));
