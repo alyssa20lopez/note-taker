@@ -1,12 +1,12 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const util = require('util');
 
 // Helper method for generating unique ids
-// const uuid = require('./helpers/uuid');
+const uuid = require('./helpers/uuid');
 
 const PORT = 3001;
-const notes = require('./db/db.json');
 
 const app = express();
 
@@ -16,10 +16,12 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 
+// GET route for homepage
 app.get('/', (req, res) =>
   res.sendFile(path.join(__dirname, '/public/index.html'))
 );
 
+// GET route for notes page
 app.get('/notes', (req, res) =>
   res.sendFile(path.join(__dirname, '/public/notes.html'))
 );
@@ -28,26 +30,18 @@ app.get('*', (req, res) =>
 res.sendFile(path.join(__dirname, '/public/index.html'))
 );
 
-// GET request for notes
+// GET request for retrieving ALL the notes
 app.get('/api/notes', (req, res) => {
-  // Send a message to the client
-  res.status(200).json(`${req.method} request received to get notes`);
+  console.info(`${req.method} request received to get notes`);
 
-  // Returning all saved notes to JSON
-  return res.json(db);
+  readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 });
 
-// POST request to add review
+// POST request to add notes
 app.post('/api/notes', (req, res) => {
   // Logging that a POST request was received
   console.info(`${req.method} request received to add notes`);
 });
-
-// Prepare a response object back to the client
-let response;
-
-// Check if there is anything in the response body
-
 
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT} 🚀`)
