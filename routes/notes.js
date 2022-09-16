@@ -3,13 +3,15 @@ const app = require('express').Router();
 const fs = require('fs')
 
 // NPM package
-const uuid = require('../helpers/uuid');
 const {readFromFile, readAndAppend, writeToFile} = require('../helpers/fsUtils');
+const uuid = require('../helpers/uuid');
 
 // GET route for notes page
 app.get('/api/notes', (req, res) => {
-  res.sendFile(path.join(__dirname, '../db/db.json'))
-});
+  readFromFile('../db/db.json', 'utf8').then(data) => {
+    res.json(JSON.parse(data))};
+  }
+);
 
 app.post('/api/notes', (req, res) => {
     let db = fs.readFileSync('..db/db.json');
