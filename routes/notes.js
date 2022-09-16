@@ -1,44 +1,45 @@
 // Dependencies
-const path = require('path');
+const app = require('express').Router();
 const fs = require('fs')
 
 // NPM package
 const uuid = require('../helpers/uuid');
-const { notStrictEqual } = require('assert');
+const {readFromFile, readAndAppend, writeToFile} = require('../helpers/fsUtils');
 
-// Routing
-module.exports = (app) => {
+// GET route for notes page
+app.get('/api/notes', (req, res) => {
+  res.sendFile(path.join(__dirname, '../db/db.json'))
+});
 
-  // GET route for notes page
-  app.get('/api/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, '../db/db.json'))
-  });
-
-  app.post('/api/notes', (req, res) => {
+app.post('/api/notes', (req, res) => {
     let db = fs.readFileSync('..db/db.json');
     db = JSON.parse(db);
     res.json(db);
-  });  
-    // Destructuring assignment for the items in req.body
-    const { title, text } = req.body;
 
-    // If all the required properties are present
-    if (title && text) {
-        // Variable for the object we will save
-        const newNote = {
-          title,
-          text,
-          note_id: uuid(),
-        }
-    };
 
+  // Destructuring assignment for the items in req.body
+  const { title, text } = req.body;
+
+  // If all the required properties are present
+  if (title && text) {
+    // Variable for the object we will save
+    const newNote = {
+      title,
+      text,
+      note_id: uuid(),
+    }
+  
     // Pushing newNote to db.json file
-     db.push(newNote);
-     fs.writeFileSync('db/db.json', JSON.stringify(db));
-     res.json(db);
-};
+    db.push(newNote);
+      fs.writeFileSync('db/db.json', JSON.stringify(db));
+      res.json(db);
+  };
+
+});
 
 app.delete('/api/notes/:id', (req,res) => {
   newNote.splice(req.params.id, 1);
-  res.send('Note has been deleted!')
+  res.send('Note has been deleted!');
 });
+
+module.exports = app;
