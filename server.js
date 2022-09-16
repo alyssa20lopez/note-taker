@@ -41,6 +41,30 @@ app.get('/api/notes', (req, res) => {
 app.post('/api/notes', (req, res) => {
   // Logging that a POST request was received
   console.info(`${req.method} request received to add notes`);
+
+  // Destructuring assignment for the items in req.body
+  const { title, text } = req.body;
+
+  // If all the required properties are present
+  if (title && text) {
+    // Variable for the object we will save
+    const newNote = {
+      title,
+      text,
+      note_id: uuid(),
+    };
+
+    readAndAppend(newNote, './db/db.json');
+
+    const response = {
+      status: 'success',
+      body: newNote,
+    };
+
+    res.json(response); 
+  } else {
+    res.json('Error in posting new note');
+  }
 });
 
 app.listen(PORT, () =>
