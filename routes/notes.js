@@ -4,6 +4,7 @@ const fs = require('fs')
 
 // NPM package
 const uuid = require('../helpers/uuid');
+const { notStrictEqual } = require('assert');
 
 // Routing
 module.exports = (app) => {
@@ -36,3 +37,8 @@ module.exports = (app) => {
      fs.writeFileSync('db/db.json', JSON.stringify(db));
      res.json(db);
 };
+
+app.delete('/api/notes/:id', (req,res) => {
+  newNote.splice(req.params.id, 1);
+  res.send('Note has been deleted!')
+});
