@@ -1,1 +1,11 @@
-"utf8"
+[
+    {
+        "title": "Test Title",
+        "text": "Test text"
+    },
+    {
+        "title": "dddd",
+        "text": "dddd",
+        "note_id": "1f45"
+    }
+]

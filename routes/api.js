@@ -9,9 +9,10 @@ const uuid = require('../helpers/uuid');
 
 // GET route for notes page
 app.get('/', (req, res) => {
-  if(req.method == 'GET'){
-    readFromFile('db/db.json', 'utf8').then((data) => res.json(JSON.parse(data)));
-  }
+    readFromFile('db/db.json').then((data) => {
+       console.log(data)
+      res.json(JSON.parse(data))
+  })  .catch((err) => console.log(err));
 });
 
 app.post('/', (req, res) => {
