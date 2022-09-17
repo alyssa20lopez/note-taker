@@ -1,20 +1,17 @@
 const express = require('express');
 const path = require('path');
-const routes = require('./routes/notes.js');
-
-// Helper method for generating unique ids
-const uuid = require('./helpers/uuid');
-
-const PORT = process.env.PORT || 3000;
-
 const app = express();
+app.use(express.json());
 
 // Middleware for parsing application/json and urlencoded data
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.use(express.static('public'));
-app.use('/api', routes);
+
+// Routes
+const api = require('./routes/api.js');
+app.use('/api', api);
+
+const PORT = process.env.PORT || 3001;
 
 // GET route for notes page
 app.get('/notes', (req, res) =>

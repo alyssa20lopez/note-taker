@@ -1,5 +1,5 @@
 // Dependencies
-const app = require('express').Router();
+const api = require('express').Router();
 const fs = require('fs');
 
 // NPM package
@@ -7,13 +7,13 @@ const {readFromFile, readAndAppend, writeToFile} = require('../helpers/fsUtils')
 const uuid = require('../helpers/uuid');
 
 // GET route for notes page
-app.get('/', (req, res) => {
+api.get('/', (req, res) => {
   if(req.method == 'GET'){
-    readFromFile('db/db.json', 'utf8').then((data) => res.json(JSON.parse(data)));
+    readFromFile('./db/db.json', 'utf8').then((data) => res.json(JSON.parse(data)));
   }
 });
 
-app.post('/', (req, res) => {
+api.post('/', (req, res) => {
   console.info(`${req.method} request received to submit notes!`);
 
 
@@ -37,9 +37,9 @@ app.post('/', (req, res) => {
 
 });
 
-app.delete('/:id', (req,res) => {
+api.delete('/:id', (req,res) => {
   newNote.splice(req.params.id, 1);
   res.send('Note has been deleted!');
 });
 
-module.exports = app;
+module.exports = api;
