@@ -9,7 +9,7 @@ const uuid = require('../helpers/uuid');
 // GET route for notes page
 app.get('/', (req, res) => {
   if(req.method == 'GET'){
-    readFromFile('../db/db.json', 'utf8').then((data) => res.json(JSON.parse(data)));
+    readFromFile('db/db.json', 'utf8').then((data) => res.json(JSON.parse(data)));
   }
 });
 
@@ -38,7 +38,7 @@ app.post('/', (req, res) => {
 
 });
 
-app.delete('/api/notes/:id', (req,res) => {
+app.delete('/api/:id', (req,res) => {
   newNote.splice(req.params.id, 1);
   res.send('Note has been deleted!');
 });
