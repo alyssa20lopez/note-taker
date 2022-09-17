@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const routes = require('./routes/notes');
+const routes = require('./routes/notes.js');
 
 // Helper method for generating unique ids
 const uuid = require('./helpers/uuid');
