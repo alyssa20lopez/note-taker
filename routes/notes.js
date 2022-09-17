@@ -29,7 +29,6 @@ app.post('/', (req, res) => {
       note_id: uuid(),
     }
   
-
     // Pushing newNote to db.json file
     db.push(newNote);
       fs.writeFileSync('db/db.json', JSON.stringify(db));
@@ -38,7 +37,7 @@ app.post('/', (req, res) => {
 
 });
 
-app.delete('/api/:id', (req,res) => {
+app.delete('/:id', (req,res) => {
   newNote.splice(req.params.id, 1);
   res.send('Note has been deleted!');
 });
