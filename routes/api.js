@@ -1,6 +1,8 @@
 // Dependencies
 const app = require('express').Router();
 const fs = require('fs');
+const db = require('../db/db.json');
+
 
 // NPM package
 const {readFromFile, readAndAppend, writeToFile} = require('../helpers/fsUtils');
@@ -14,7 +16,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/', (req, res) => {
-  console.info(`${req.method} request received to submit notes!`);
+  console.info(`${req.method} request received to submit note!`);
 
 
   // Destructuring assignment for the items in req.body
@@ -23,23 +25,38 @@ app.post('/', (req, res) => {
   // If all the required properties are present
   if (title && text) {
     // Variable for the object we will save
-    const newNote = {
+    const addNote = {
       title,
       text,
       note_id: uuid(),
     }
   
     // Pushing newNote to db.json file
-    db.push(newNote);
-      fs.writeFileSync('db/db.json', JSON.stringify(db));
-      res.json(db);
-  };
+    readAndAppend(addNote, 'db/db.json');
+    
+    const response = {
+      status: 'success',
+      body: addNote,
+    };
+
+    res.json(response);
+  } else {
+    res.json('Error in adding note!')
+  }
 
 });
 
-app.delete('/:id', (req,res) => {
-  newNote.splice(req.params.id, 1);
-  res.send('Note has been deleted!');
+app.delete('/:id', async (req,res) => {
+  console.info(`${req.method} request received to submit notes!`);
+
+  const rmNote = req.params.id;
+  let getFile = await readFromFile('db/db.json');
+  getFile = JSON.parse(getFile);
+
+  getFile = getFile.filter(x => x.id !== rmNote);
+  writeToFile('db/db.json', getFile);
+
+  res.json('Note successfully removed!');
 });
 
 module.exports = app;
