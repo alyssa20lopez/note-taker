@@ -1,7 +1,6 @@
 // Dependencies
 const app = require('express').Router();
 const fs = require('fs');
-const db = require('../db/db.json');
 
 
 // NPM package
