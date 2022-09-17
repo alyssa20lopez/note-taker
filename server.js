@@ -11,17 +11,17 @@ app.use(express.static('public'));
 const api = require('./routes/api.js');
 app.use('/api', api);
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
-// GET route for notes page
-app.get('/notes', (req, res) =>
-res.sendFile(path.join(__dirname, '/public/notes.html'))
-);
+  // GET route for notes page
+  app.get('/notes', (req, res) =>
+  res.sendFile(path.join(__dirname, '/public/notes.html'))
+  );
 
-// GET route for homepage
-app.get('*', (req, res) =>
-res.sendFile(path.join(__dirname, '/public/index.html'))
-);
+  // GET route for homepage
+  app.get('*', (req, res) =>
+  res.sendFile(path.join(__dirname, '/public/index.html'))
+  );
 
 // Localhost
 app.listen(PORT, () =>
