@@ -28,7 +28,7 @@ app.post('/', (req, res) => {
     const addNote = {
       title,
       text,
-      note_id: uuid(),
+      id: uuid(),
     }
   
     // Pushing newNote to db.json file
