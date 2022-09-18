@@ -8,8 +8,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 // Routes
-const api = require('./routes/api.js');
-app.use('/api', api);
+const apiPath = require('./routes/api.js');
+app.use('/api', apiPath);
 
 const PORT = process.env.PORT || 3000;
 
