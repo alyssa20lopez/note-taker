@@ -9,7 +9,7 @@ const uuid = require('../helpers/uuid');
 
 // GET route for notes page
 app.get('/', (req, res) => {
-    readFromFile('db/db.json').then((data) => {
+    readFromFile('db/db.json', 'utf-8').then((data) => {
        console.log(data)
       res.json(JSON.parse(data))
   })  .catch((err) => console.log(err));
@@ -47,7 +47,7 @@ app.post('/', (req, res) => {
 });
 
 app.delete('/:id', async (req,res) => {
-  console.info(`${req.method} request received to submit notes!`);
+  console.info(`${req.method} request received to delete note!`);
 
   const rmNote = req.params.id;
   let getFile = await readFromFile('db/db.json');
