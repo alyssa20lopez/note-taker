@@ -2,7 +2,6 @@
 const app = require('express').Router();
 const fs = require('fs');
 
-
 // NPM package
 const {readFromFile, readAndAppend, writeToFile} = require('../helpers/fsUtils');
 const uuid = require('../helpers/uuid');
@@ -53,7 +52,7 @@ app.delete('/:id', async (req,res) => {
   let getFile = await readFromFile('db/db.json');
   getFile = JSON.parse(getFile);
 
-  getFile = getFile.filter(x => x.id !== rmNote);
+  getFile = getFile.filter(item => item.id !== rmNote);
   writeToFile('db/db.json', getFile);
 
   res.json('Note successfully removed!');
