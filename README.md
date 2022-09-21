@@ -1,4 +1,4 @@
-# note-taker
+# Note Taker
 
 Module 11: Express
 
